@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
