@@ -4,6 +4,9 @@ import android.text.TextUtils;
 import com.example.materialtest.db.City;
 import com.example.materialtest.db.County;
 import com.example.materialtest.db.Province;
+import com.example.materialtest.gson.Weather;
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 public class Utility {
@@ -22,6 +25,7 @@ public class Utility {
                     province.setProvinceName(provinceObject.getString("name"));
                     province.setProvinceCode(provinceObject.getInt("id"));
                     province.save();
+                    return true;
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -67,9 +71,20 @@ public class Utility {
         }
         return false;
      }
-
-
-
+    /**
+     * 将返回的JSON数据解析成Weather实体类
+     */
+    public static Weather handleWeatherResponse(String response){
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weatherContent,Weather.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
 
